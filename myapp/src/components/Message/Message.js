@@ -1,9 +1,9 @@
-import React from "react"
+import React, { Children } from "react"
 
 // компонент Message, вывод текста в формате: автор - текст
+// добавленны разные стили для бота и пользователя
 function Message(props) {
-    const author = props.message.author
-    const text = props.message.text
+    const { message: { author, text } } = props
     return (
         <>
             {

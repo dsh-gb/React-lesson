@@ -8,10 +8,10 @@ function App() {
   // отслеживание состояния для списка сообщения
   const [messageList, setMessageList] = useState([])
 
-  // отследивание состояния для ввода текста сообщения
+  // отслеживание состояния для ввода текста сообщения
   const [inputValue, setInputValue] = useState('')
 
-  // функция handleMessageChange  - обработки изменения текста
+  // функция handleMessageChange  - обработка изменения текста
   const handleMessageChange = (e) => {
     setInputValue(e.target.value)
   }
@@ -22,7 +22,7 @@ function App() {
 
     setMessageList((currentMessageList) => [
       ...currentMessageList,
-      { author: AUTHORS.ME, text: inputValue },
+      { author: AUTHORS.ME, text: inputValue }, // добавляем новый объект в массив сообщений
     ])
     setInputValue('')
   }

@@ -1,0 +1,91 @@
+.App {
+  text-align: center;
+}
+
+.App-header {
+  background-color: #282c34;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  font-size: 24px;
+  color: white;
+}
+
+.message-list {
+  margin: 0;
+  padding: 15px 0 0 50px;
+  display: flex;
+  min-height: 100px;
+  background-color: #5f5b5bb3;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.message-me {
+  padding: 0 0 10px 50px;
+  display: flex;
+  justify-content: flex-start;
+  font-weight: 600;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.message-bot {
+  padding: 0 30px 10px 400px;
+  display: flex;
+  font-weight: 600;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+.message-form {
+  min-height: 40px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.message-form-input {
+  padding: 0 0 0 20px;
+  flex-grow: 6;
+  border-left-style: none;
+  border-right-style: none;
+  background-color:#8080804d;
+  border-top: #282c34;
+  font-size: 22px;
+}
+
+.message-form-button {
+  margin: 0;
+  flex-grow: 1;
+  border: none;
+  background-color: #282c34;
+  color: #fff;
+  font-weight: bold;
+  font-size: 20px;
+}
+
+.message-author {
+  color: #253e4a;
+  font-size: 20px;
+}
+
+.message-me-text {
+  max-width: 300px;
+  padding: 10px 40px;
+  margin: -10px 0 15px 30px;
+  background-color: #3e6f1d;
+  color: #ced8dc;
+  border-radius: 20px;
+  font-size: 26x;
+}
+
+.message-bot-text {
+  max-width: 300px;
+  padding: 10px 40px;
+  margin: -10px 30px 15px 0;
+  background-color: #64884c;
+  color: #ced8dc;
+  border-radius: 20px;
+  font-size: 26x;
+}

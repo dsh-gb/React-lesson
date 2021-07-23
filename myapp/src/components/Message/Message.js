@@ -1,4 +1,5 @@
-import React, { Children } from "react"
+import React from "react"
+import { AUTHORS } from '../App/constants'
 
 // компонент Message, вывод текста в формате: автор - текст
 // добавленны разные стили для бота и пользователя
@@ -7,7 +8,7 @@ function Message(props) {
     return (
         <>
             {
-                author === 'Me' &&
+                author === AUTHORS.ME &&
                 < li className="message-me" >
                     <div className="message-author">
                         {author}
@@ -18,7 +19,7 @@ function Message(props) {
                 </li >
             }
             {
-                author === 'Bot' &&
+                author === AUTHORS.BOT &&
                 < li className="message-bot" >
                     <div className="message-author">
                         {author}

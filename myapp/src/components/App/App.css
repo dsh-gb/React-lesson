@@ -12,14 +12,25 @@
   color: white;
 }
 
+.chat {
+  display: flex;
+  justify-content: space-between;
+}
+
+.chat-list {
+  width: 30vw;
+}
+
 .message-list {
   margin: 0;
-  padding: 15px 0 0 50px;
+  padding: 0;
+  width: 70vw;
   display: flex;
   min-height: 100px;
   background-color: #5f5b5bb3;
   flex-direction: column;
   align-items: flex-start;
+  justify-content: flex-end;
 }
 
 .message-me {
@@ -41,6 +52,7 @@
 
 .message-form {
   min-height: 40px;
+  width: 100%;
   display: flex;
   justify-content: space-between;
 }

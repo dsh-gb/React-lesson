@@ -3,25 +3,39 @@ import React, { useState } from 'react'
 import { List, ListItem, ListSubheader, ListItemText } from '@material-ui/core'
 import Chat from '../Chats/ChatItem'
 
-function App() {
+function App({ match }) {
   // начальный список чатов
   const initialChats = [
-    { id: "ch1", name: "Чат 1" },
-    { id: "ch2", name: "Чат 2" },
-    { id: "ch3", name: "Чат 3" }
+    { id: "1", name: "Чат 1" },
+    { id: "2", name: "Чат 2" },
+    { id: "3", name: "Чат 3" }
   ]
+
+  // записываем переданный id чата в chatsId
+  const chatsId = match?.params.chatsId
 
   // отслеживание состояния списка чатов, начальное значение пустой массив
   const [chats, setChats] = useState(initialChats)
 
-  // отслеживаем состояние текущего чата, начальное значение первый элемент массива чата если он есть
-  const [currentChat, setCurrentChat] = useState(chats[0])
+  // отслеживаем состояние текущего чата, начальное значение первый элемент массива чата
+  let [currentChat, setCurrentChat] = useState([])
+
+  // проверяем есть ли такой id чата в нашем списке чатов
+  // если есть то в currentChat присваиваем чат с этим id
+  initialChats.forEach(el => {
+    if (el.id === chatsId) {
+      currentChat = initialChats[parseInt(chatsId) - 1]
+    }
+  })
 
   return (
     <>
       <div className="App">
         <header className="App-header">
-          <h1>Chat:</h1>
+          {/* если не выбран чат, то выводим заголовок "Список чатов"
+          иначе выводим название выбранного чата */}
+          {currentChat.length === 0 && <h1>Список чатов</h1>}
+          {currentChat.length !== 0 && <h1>Ваш чат: {currentChat.name}</h1>}
         </header>
         <div className="chat">
           <List

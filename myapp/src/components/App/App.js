@@ -14,7 +14,7 @@ function App({ match }) {
   // записываем переданный id чата в chatsId
   const chatsId = match?.params.chatsId
 
-  // отслеживание состояния списка чатов, начальное значение пустой массив
+  // отслеживание состояния списка чатов, начальное значение массив initialChats
   const [chats, setChats] = useState(initialChats)
 
   // отслеживаем состояние текущего чата, начальное значение первый элемент массива чата
@@ -34,8 +34,7 @@ function App({ match }) {
         <header className="App-header">
           {/* если не выбран чат, то выводим заголовок "Список чатов"
           иначе выводим название выбранного чата */}
-          {currentChat.length === 0 && <h1>Список чатов</h1>}
-          {currentChat.length !== 0 && <h1>Ваш чат: {currentChat.name}</h1>}
+          {!currentChat.id ? <h1>Список чатов</h1> : <h1>Ваш чат: {currentChat.name}</h1>}
         </header>
         <div className="chat">
           <List

@@ -2,6 +2,23 @@
   text-align: center;
 }
 
+.menu {
+  padding: 10px 0 0 20px;
+  min-height: 50px;
+  display: flex;
+  justify-content: flex-start;
+  background-color: #5c5959;
+  font-size: 20px;
+}
+
+.menu-link {
+  padding-right: 20px;
+  color: #b1afaf;
+  text-decoration: none;
+  text-transform: uppercase;
+  font-weight: 700;
+}
+
 .App-header {
   background-color: #282c34;
   display: flex;

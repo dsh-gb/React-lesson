@@ -48,7 +48,7 @@ const Chat = (props) => {
         <>
             <ul className="message-list">
                 {messageList.map((message, index) => <Message key={index} message={message} />)}
-                <Input onSubmit={handleMessageSubmit} />
+                <Input onSubmit={handleMessageSubmit} label="Ваше сообщение..." />
             </ul>
         </>
     )

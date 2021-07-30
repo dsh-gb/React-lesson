@@ -118,3 +118,17 @@
   border-radius: 20px;
   font-size: 26x;
 }
+
+.profile-input {
+  margin-left: 20px;
+  min-height: 70px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.profile-text {
+  font-size: 40px;
+  font-weight: 700;
+}

@@ -5,7 +5,7 @@ import SendIcon from '@material-ui/icons/Send';
 // компонент Input - текстовое поле и кнопка отправки сообшения
 // значение текстового поля хранится в компоненте
 const Input = (props) => {
-    const { onSubmit, onChange } = props
+    const { onSubmit, label } = props
 
     // отслеживание состояния ввода текста сообщения
     const [inputValue, setInputValue] = useState('')
@@ -33,7 +33,7 @@ const Input = (props) => {
             <TextField
                 onChange={handleChange}
                 value={inputValue}
-                label="Ваше сообщение..."
+                label={label}
                 required
                 fullWidth
                 autoFocus

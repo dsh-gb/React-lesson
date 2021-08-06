@@ -1,8 +1,8 @@
-import React, { useRef, useEffect, useState } from 'react'
+import React from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { messagesSelector } from '../../selectors/messages'
-import { changeMessages } from '../../actions/messages'
-import usePrevious from '../../hooks/usePrevious'
+import { chatsSelector } from '../../selectors/chats'
+import { changeMessageWithThunk } from '../../actions/messages'
 import Message from '../Message/Message'
 import Input from '../Input/Input'
 import { AUTHORS } from '../App/constants'
@@ -10,7 +10,7 @@ import { AUTHORS } from '../App/constants'
 // компонент Chat - отрисовывание и запись сообщений в store.messages
 const Chat = (props) => {
     // записываем id выбранного чата в currentChatId
-    const { currentChatId } = props
+    let { currentChatId } = props
 
     // вызываем dispatch используя хук useDispatch
     const dispatch = useDispatch()
@@ -18,63 +18,44 @@ const Chat = (props) => {
     // получаем доступ к данным messages в store с помощью хука useSelector и селектора messagesSelector
     const { messages } = useSelector(messagesSelector)
 
+    // получаем доступ к данным chats в store с помощью хука useSelector и селектора chatsSelector
+    const { chats } = useSelector(chatsSelector)
+
+    const findChatId = chats.find(el => el.id === currentChatId)
+
+    // елси нету в списке чатов chats чата с id = currentChatId,
+    // то присваиваем в currentChatId значение undefined
+    if (findChatId === undefined) {
+        currentChatId = undefined
+    }
+
+    // currentChat - массив сообщений объекта с idChat равным текущему id чату, если не найден объект
+    // с таким id и он существует в списке чатов chats, то создаем его с idChat=currentChatId 
+    // и  с пустым массивом сообщений messagesChat
+    let currentChat = messages.find(el => el.idChat === currentChatId)?.messagesChat
+    console.log(findChatId)
+    if ((currentChat === undefined) && currentChatId !== undefined) {
+        messages.push({
+            idChat: currentChatId,
+            messagesChat: []
+        })
+        currentChat = messages[messages.length - 1].messagesChat
+    }
+
+    // indexCurrentChat - индекс объекта чата с idChat=currentChatId в массиве чатов messages
+    const indexCurrentChat = messages.findIndex(el => el.idChat === currentChatId)
+
     // функция handleChangeMessages - изминение в state.messages
-    const handleChangeMessages = (newMessages) => dispatch(changeMessages(newMessages))
-
-    // отслеживание состояния для списка сообщения
-    const [messageList, setMessageList] = useState([])
-
-    // currentChat - массив messagesChat с idChat равным текущему id чату
-    const currentChat = messages.find(el => el.idChat === currentChatId)?.messagesChat
+    const handleChangeMessages = (newMessages, index) => dispatch(changeMessageWithThunk(newMessages, index))
 
     // функция handleMessageSubmit  - обработка отправки формы
     const handleMessageSubmit = (newMessageText) => {
-        setMessageList((currentMessageList) => [
-            ...currentMessageList,
-            { author: AUTHORS.ME, text: newMessageText }, // добавляем новый объект в массив сообщений
-        ])
-        // записываем в объект массива messages с idChat равным текущему id чата 
-        // новое сообщение messagesChat, если нету объекта с таким idChat, то
-        // создаем его и записываем сообщение в него
-        if (messages.length) {
-            if (currentChat !== undefined) {
-                currentChat.push({ author: AUTHORS.ME, text: newMessageText })
-            } else {
-                messages.push({
-                    idChat: currentChatId,
-                    messagesChat: [{ author: AUTHORS.ME, text: newMessageText }]
-                })
-            }
-        } else {
-            // инициализация массива чатов сообщений
-            messages[0] = {
-                idChat: currentChatId,
-                messagesChat: [{ author: AUTHORS.ME, text: newMessageText }]
-            }
-        }
-        handleChangeMessages([...messages])
+        const message = { author: AUTHORS.ME, text: newMessageText }
+        // записываем в массив currentChat новое сообщение message
+        currentChat.push(message)
+        // диспатчем в сторе измененый объект messages
+        handleChangeMessages([...messages], indexCurrentChat)
     }
-
-    // используем хук usePrevious для получения предыдущего значения messageList
-    const prevMessageList = usePrevious(messageList)
-
-    // 
-    const timer = useRef(null)
-
-    useEffect(() => {
-        if (prevMessageList?.length < messageList.length && messageList[messageList.length - 1].author === AUTHORS.ME)
-            timer.current = setTimeout(() => {
-                currentChat.push({ author: AUTHORS.BOT, text: 'привет' })
-                handleChangeMessages([...messages])
-            }, 1500)
-    }, [messageList, prevMessageList]) // указываем зависимости для UseEffect
-
-    // удаляем таймер после его использования
-    useEffect(() => {
-        return () => {
-            clearTimeout(timer.current)
-        }
-    }, [])
 
     return (
         // если не выбран чат, то выводим сообщение "Выбирите чат", иначе

@@ -9,6 +9,7 @@ import { List, ListItem, ListSubheader, ListItemText, IconButton } from '@materi
 import DeleteIcon from '@material-ui/icons/Delete'
 import AddCircleIcon from '@material-ui/icons/AddCircle'
 import Chat from '../Chats/ChatItem'
+import Header from '../Header/Header'
 
 function App(props) {
   // вызываем dispatch используя хук useDispatch
@@ -62,66 +63,63 @@ function App(props) {
       }
     })
   }
+
+  let textHeader = "сообщений нету"
+  if (currentMessageChat !== undefined) {
+    textHeader = `сообщений - ${currentMessageChat.length}`
+  }
+
   return (
     <>
-      <div className="App">
-        <header className="App-header">
-          {/* если не выбран чат, то выводим заголовок "Список чатов"
+      {/* если не выбран чат, то выводим заголовок "Список чатов"
           иначе выводим название выбранного чата  и число сообщений в этом чате*/}
-          {!currentChat.id ? <h1>Список чатов</h1> :
-            <h1>{currentChat.name}
-              {currentMessageChat !== undefined ?
-                <span> / сообщений - {currentMessageChat.length}
-                </span> :
-                <span> / сообщений нету</span>
-              }
-            </h1>}
-        </header>
-        <div className="chat">
-          <List
-            className="chat-list"
-            component="nav"
-            subheader={
-              <ListSubheader component="div">
-                Список чатов
-              </ListSubheader>
-            }
-          >
-            {chats.map((chat) =>
-              <div className="chat-list-wrapper" key={`div-${chat.id}`}>
-                <ListItem
-                  button
-                  onClick={() => setCurrentChat(chat)}
-                  key={chat.id}
-                  selected={chat.id === currentChat.id}>
-                  <ListItemText primary={chat.name} />
-                </ListItem>
-                <IconButton
-                  className="chat-list-delete"
-                  key={`button-${chat.id}`}
-                  onClick={() => handleChatRemove(chat.id)}
-                  variant="contained"
-                  color="primary"
-                  type="button"
-                  size="small"
-                >
-                  <DeleteIcon />
-                </IconButton>
-              </div>
-            )}
-            <IconButton
-              className="chat-list-add"
-              onClick={handleChatAdd}
-              variant="contained"
-              color="primary"
-              type="button"
-              size="small"
-            > Создать чат...
-              <AddCircleIcon />
-            </IconButton>
-          </List>
-          <Chat currentChatId={currentChat.id} />
-        </div>
+      {!currentChat.id ? <Header text="Список чатов" key="list chats" /> :
+        <Header text={textHeader} key="chat" />}
+
+      < div className="chat">
+        <List
+          className="chat-list"
+          component="nav"
+          subheader={
+            <ListSubheader component="div">
+              Список чатов
+            </ListSubheader>
+          }
+        >
+          {chats.map((chat) =>
+            <div className="chat-list-wrapper" key={`div-${chat.id}`}>
+              <ListItem
+                button
+                onClick={() => setCurrentChat(chat)}
+                key={chat.id}
+                selected={chat.id === currentChat.id}>
+                <ListItemText primary={chat.name} />
+              </ListItem>
+              <IconButton
+                className="chat-list-delete"
+                key={`button-${chat.id}`}
+                onClick={() => handleChatRemove(chat.id)}
+                variant="contained"
+                color="primary"
+                type="button"
+                size="small"
+              >
+                <DeleteIcon />
+              </IconButton>
+            </div>
+          )}
+          <IconButton
+            className="chat-list-add"
+            onClick={handleChatAdd}
+            variant="contained"
+            color="primary"
+            type="button"
+            size="small"
+          > Создать чат...
+            <AddCircleIcon />
+          </IconButton>
+        </List>
+        <Chat currentChatId={currentChat.id} />
       </div>
     </>
   )

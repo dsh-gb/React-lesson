@@ -33,7 +33,6 @@ const Chat = (props) => {
     // с таким id и он существует в списке чатов chats, то создаем его с idChat=currentChatId 
     // и  с пустым массивом сообщений messagesChat
     let currentChat = messages.find(el => el.idChat === currentChatId)?.messagesChat
-    console.log(findChatId)
     if ((currentChat === undefined) && currentChatId !== undefined) {
         messages.push({
             idChat: currentChatId,

@@ -38,6 +38,26 @@
   width: 30vw;
 }
 
+.chat-list-wrapper {
+  margin-bottom: 10px;
+  display: flex;
+  justify-content: space-around;
+}
+
+.chat-list-item {
+  width: 60%;
+  text-align: center;
+}
+
+.message-window {
+  margin: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-grow: 2;
+  background-color: #5f5b5bb3;
+}
+
 .message-list {
   margin: 0;
   padding: 0;

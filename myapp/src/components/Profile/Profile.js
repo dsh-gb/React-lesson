@@ -4,13 +4,15 @@ import { changeShowName, changeName } from '../../actions/profile'
 import FormControlLabel from '@material-ui/core/FormControlLabel'
 import Checkbox from '@material-ui/core/Checkbox'
 import Input from '../Input/Input'
+import { profileSelector } from '../../selectors/profile'
 
 function Profile() {
     // вызываем dispatch используя хук useDispatch
     const dispatch = useDispatch()
 
-    // получаем доступ к данным в store с помощью хука useSelector
-    const { showName, name } = useSelector((state) => state.profile)
+    // получаем доступ к данным profile в store с помощью хука useSelector
+    // используем для этого profileSelector
+    const { showName, name } = useSelector(profileSelector)
 
     // функция handleShowName - изминение showName в store 
     const handleShowName = () => dispatch(changeShowName())

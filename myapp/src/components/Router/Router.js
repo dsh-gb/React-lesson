@@ -29,6 +29,7 @@ function Router() {
             <Route path={LINK.CHATS} exact>
                 <App />
             </Route>
+            {/* передаем в App через match.params наш CHATSID */}
             <Route path={LINK.CHATSID} component={App} />
 
             <Redirect to={LINK.DEFAULT}></Redirect>

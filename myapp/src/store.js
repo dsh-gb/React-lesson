@@ -1,9 +1,13 @@
 import { combineReducers, createStore } from 'redux'
 import profileReducer from './reducers/profile'
+import chatsReducer from './reducers/chats'
+import messagesReducer from './reducers/messages'
 
-// "массив" наших редюсеров
+// список наших редюсеров
 const rootReducer = combineReducers({
-    profile: profileReducer
+    profile: profileReducer,
+    chats: chatsReducer,
+    messages: messagesReducer
 })
 
 // создаем объект store, передаем ему reducer и подключаем redux dev tools

@@ -9,7 +9,7 @@ import { PersistGate } from 'redux-persist/integration/react'
 
 ReactDOM.render(
   <React.StrictMode>
-    {/* оборачиваем все наше прилодение в компонент Provider
+    {/* оборачиваем все наше приложение в компонент Provider
     и передаем ему в пропсы наш объект store */}
     <Provider store={store}>
       <PersistGate persistor={persistor} loading={<p>Загрузка данных...</p>}>

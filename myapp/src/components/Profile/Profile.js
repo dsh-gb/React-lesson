@@ -5,6 +5,7 @@ import FormControlLabel from '@material-ui/core/FormControlLabel'
 import Checkbox from '@material-ui/core/Checkbox'
 import Input from '../Input/Input'
 import { profileSelector } from '../../selectors/profile'
+import Header from '../Header/Header'
 
 function Profile() {
     // вызываем dispatch используя хук useDispatch
@@ -22,30 +23,26 @@ function Profile() {
 
 
     return <>
-        <div className="App">
-            <header className="App-header">
-                <h1>Ваш профиль</h1>
-            </header>
-            <div>
-                <Input
-                    onSubmit={handleChangeName}
-                    label="Ваше имя..."
+        <Header text="Ваш профиль" key="profile" />
+        <div>
+            <Input
+                onSubmit={handleChangeName}
+                label="Ваше имя..."
+            />
+            <div className="profile-input">
+                <FormControlLabel
+                    control={
+                        <Checkbox
+                            checked={showName}
+                            onChange={handleShowName}
+                            color="primary"
+                        />
+                    }
+                    label="Показать имя"
+                    labelPlacement="start"
                 />
-                <div className="profile-input">
-                    <FormControlLabel
-                        control={
-                            <Checkbox
-                                checked={showName}
-                                onChange={handleShowName}
-                                color="primary"
-                            />
-                        }
-                        label="Показать имя"
-                        labelPlacement="start"
-                    />
-                    {showName && <div className="profile-text">{name}</div>}
+                {showName && <div className="profile-text">{name}</div>}
 
-                </div>
             </div>
         </div>
     </>

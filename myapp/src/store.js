@@ -1,18 +1,34 @@
-import { combineReducers, createStore } from 'redux'
+import { applyMiddleware, combineReducers, compose, createStore } from 'redux'
+import thunk from 'redux-thunk'
+import { persistReducer, persistStore } from 'redux-persist'
+import storage from 'redux-persist/lib/storage'
 import profileReducer from './reducers/profile'
 import chatsReducer from './reducers/chats'
 import messagesReducer from './reducers/messages'
 
-// список наших редюсеров
+// список наших редюсеров - корневой редюсер
 const rootReducer = combineReducers({
     profile: profileReducer,
     chats: chatsReducer,
     messages: messagesReducer
 })
 
+// конфиг для persist
+const persistConfig = {
+    key: 'root',
+    storage,
+}
+
+// persist редюсер 
+const persistedReducer = persistReducer(persistConfig, rootReducer)
+
+// composeEnhancers - функция в которую с помощью applyMidleware положим middleware thunk
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose
+
 // создаем объект store, передаем ему reducer и подключаем redux dev tools
 export const store = createStore(
-    rootReducer,
-    window.__REDUX_DEVTOOLS_EXTENSION__ &&
-    window.__REDUX_DEVTOOLS_EXTENSION__()
-);
+    persistedReducer,
+    composeEnhancers(applyMiddleware(thunk))
+)
+
+export const persistor = persistStore(store)

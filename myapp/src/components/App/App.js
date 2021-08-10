@@ -4,7 +4,10 @@ import { useSelector, useDispatch } from 'react-redux'
 import { chatsSelector } from '../../selectors/chats'
 import { messagesSelector } from '../../selectors/messages'
 import { changeChats } from '../../actions/chats'
-import { List, ListItem, ListSubheader, ListItemText, Button } from '@material-ui/core'
+import { changeMessages } from '../../actions/messages'
+import { List, ListItem, ListSubheader, ListItemText, IconButton } from '@material-ui/core'
+import DeleteIcon from '@material-ui/icons/Delete'
+import AddCircleIcon from '@material-ui/icons/AddCircle'
 import Chat from '../Chats/ChatItem'
 
 function App(props) {
@@ -24,13 +27,29 @@ function App(props) {
   const currentMessageChat = messages.find(el => el.idChat === currentChat.id)?.messagesChat
 
   // removeChat - функция вызова dispatch изминения значения chats в  store
-  const removeChat = (newChats) => dispatch(changeChats(newChats))
+  const changeChat = (newChats) => dispatch(changeChats(newChats))
 
   // handleChatRemove - вызывается по клику на кнопку, создает новый массив chats
   // без элемента с индексом chatId
   const handleChatRemove = (chatId) => {
     const newChats = chats.filter(el => el.id !== chatId)
-    removeChat(newChats)
+    changeChat(newChats)
+    // удаляем запись сообщений чата с chatId из массива messages сообщений чатов
+    const deleteChatIndex = messages.findIndex(el => el.idChat === chatId)
+    messages.splice(deleteChatIndex, 1)
+    dispatch(changeMessages(messages))
+    // если удаляем чат с текущим id, то записываем в этот id значение undefined
+    if (chatId === currentChat.id) {
+      currentChat.id = undefined
+    }
+  }
+
+  // handleChatAdd - вызывается по клику на кнопку, добавляет новый элемент в массив chats
+  // с рандомным индексом 
+  const handleChatAdd = () => {
+    const newIdChats = ('0000' + Math.random().toString(36).replace('.', '')).substr(-5)
+    const newChat = { id: `${newIdChats}`, name: `Чат ${newIdChats}` }
+    changeChat([...chats, newChat])
   }
 
   // если передали в url значение id чата, то записываем переданный id чата в chatsId
@@ -77,17 +96,29 @@ function App(props) {
                   selected={chat.id === currentChat.id}>
                   <ListItemText primary={chat.name} />
                 </ListItem>
-                <Button
+                <IconButton
+                  className="chat-list-delete"
                   key={`button-${chat.id}`}
                   onClick={() => handleChatRemove(chat.id)}
                   variant="contained"
                   color="primary"
                   type="button"
                   size="small"
-                >Удалить
-                </Button>
+                >
+                  <DeleteIcon />
+                </IconButton>
               </div>
             )}
+            <IconButton
+              className="chat-list-add"
+              onClick={handleChatAdd}
+              variant="contained"
+              color="primary"
+              type="button"
+              size="small"
+            > Создать чат...
+              <AddCircleIcon />
+            </IconButton>
           </List>
           <Chat currentChatId={currentChat.id} />
         </div>

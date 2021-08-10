@@ -29,6 +29,15 @@
   color: white;
 }
 
+.App-block {
+  padding: 20px;
+  max-height: 50px;
+  min-width: 60vw;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}
+
 .chat {
   display: flex;
   justify-content: space-between;
@@ -47,6 +56,14 @@
 .chat-list-item {
   width: 60%;
   text-align: center;
+}
+
+.chat-list-delete:hover {
+  color: #e16363;
+}
+
+.chat-list-add:hover {
+  color: #6bb963;
 }
 
 .message-window {
@@ -80,7 +97,7 @@
 }
 
 .message-bot {
-  padding: 0 30px 10px 400px;
+  padding: 0 30px 10px 300px;
   display: flex;
   font-weight: 600;
   flex-direction: column;
@@ -130,8 +147,8 @@
 }
 
 .message-bot-text {
-  max-width: 300px;
-  padding: 10px 40px;
+  min-width: 100px;
+  padding: 10px 20px;
   margin: -10px 30px 15px 0;
   background-color: #64884c;
   color: #ced8dc;

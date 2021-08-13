@@ -12,6 +12,7 @@ export
         CHATSID: "/chats/:chatsId",
         PROFILE: "/profile",
         NEWS: "/news",
+        LOGIN: "/login",
     },
 
     NEWS = {
@@ -21,5 +22,9 @@ export
             ERROR: 'error',
             IDLE: 'idle',
         }
+    },
+
+    TIME = {
+        DELAY_MESSAGE_BOT: 500,
     }
 

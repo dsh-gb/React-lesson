@@ -83,7 +83,10 @@ export default function News(props) {
 
     const [open, setOpen] = useState(true)
     const loadNewsList = () => dispatch(fetchNews())
-    const handleClose = () => setOpen(false)
+    const handleClose = () => {
+        setOpen(false)
+        // return list.map((data) => <NewsRender data={data} key={data.id} />)
+    }
 
     useEffect(() => {
         loadNewsList()
@@ -94,32 +97,37 @@ export default function News(props) {
     }
 
     return <>
-        <Header text="Новости" key="news-heading" />
+        {open ?
+            <Header text="Новости" key="news-heading" /> :
+            <Header text="Новости оффлайн" key="news-heading" />
+        }
         {status !== NEWS.REQUEST_STATUS.ERROR
             ?
             list.map((data) => <NewsRender data={data} key={data.id} />)
-            :
-            (<Dialog
-                open={open}
-                onClose={handleClose}
-            >
-                <DialogTitle>{"Ошибка получения данных с сервера!"}</DialogTitle>
-                <DialogContent>
-                    <DialogContentText>
-                        Для отправки запроса на сервер нажмите на кнопку
-                        "Отправить запрос" или на кнопку "Закрыть окно"
-                        для закрытия этого окна
-                    </DialogContentText>
-                </DialogContent>
-                <DialogActions>
-                    <Button onClick={handleClose} color="primary">
-                        Закрыть окно
-                    </Button>
-                    <Button onClick={loadNewsList} color="primary" autoFocus>
-                        Отправить запрос
-                    </Button>
-                </DialogActions>
-            </Dialog>
-            )}
+            : open ?
+                <Dialog
+                    open={open}
+                    onClose={handleClose}
+                >
+                    <DialogTitle>{"Ошибка получения данных с сервера!"}</DialogTitle>
+                    <DialogContent>
+                        <DialogContentText>
+                            Для отправки запроса на сервер нажмите на кнопку
+                            "Отправить запрос" или на кнопку "Загрузить новости из кэша"
+                            для закрытия этого окна и загрузки новостей из кэша
+                        </DialogContentText>
+                    </DialogContent>
+                    <DialogActions>
+                        <Button onClick={handleClose} color="primary">
+                            Загрузить новости из кэша
+                        </Button>
+                        <Button onClick={loadNewsList} color="primary" autoFocus>
+                            Отправить запрос
+                        </Button>
+                    </DialogActions>
+                </Dialog>
+                :
+                list.map((data) => <NewsRender data={data} key={data.id} />)
+        }
     </>
 }

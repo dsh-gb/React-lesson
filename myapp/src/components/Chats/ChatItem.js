@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { messagesSelector } from '../../selectors/messages'
 import { chatsSelector } from '../../selectors/chats'
@@ -6,9 +6,13 @@ import { changeMessageWithThunk } from '../../actions/messages'
 import Message from '../Message/Message'
 import Input from '../Input/Input'
 import { AUTHORS } from '../App/constants'
+import firebase from 'firebase'
 
 // компонент Chat - отрисовывание и запись сообщений в store.messages
 const Chat = (props) => {
+
+    const db = firebase.database()
+
     // записываем id выбранного чата в currentChatId
     let { currentChatId } = props
 
@@ -45,15 +49,38 @@ const Chat = (props) => {
     const indexCurrentChat = messages.findIndex(el => el.idChat === currentChatId)
 
     // функция handleChangeMessages - изминение в state.messages
-    const handleChangeMessages = (newMessages, index) => dispatch(changeMessageWithThunk(newMessages, index))
+    const handleChangeMessages = (newMessages, chatId, index) => dispatch(changeMessageWithThunk(newMessages, chatId, index))
+
+    // предварительно обнулив массив messages считываем из узла messages
+    // базы firebase по найденным key все записи и добавляем
+    // эту запись в store
+    useEffect(() => {
+        messages.splice(0)
+        db.ref('messages').get().then(snapshot => {
+            snapshot.forEach(item => {
+                messages.push({
+                    idChat: item.key,
+                    messagesChat: []
+                })
+                const index = messages.findIndex(el => el.idChat === item.key)
+                db.ref('messages').child(`${item.key}`).get().then(snapshot => snapshot.forEach(el => {
+                    messages[index].messagesChat.push(el.val())
+                }))
+            })
+        })
+    }, [])
 
     // функция handleMessageSubmit  - обработка отправки формы
     const handleMessageSubmit = (newMessageText) => {
         const message = { author: AUTHORS.ME, text: newMessageText }
+
+        // добавление в базу firebase записи в узел messages с id = chatId 
+        db.ref('messages').child(currentChatId).push(message)
+
         // записываем в массив currentChat новое сообщение message
         currentChat.push(message)
         // диспатчем в сторе измененый объект messages
-        handleChangeMessages([...messages], indexCurrentChat)
+        handleChangeMessages([...messages], currentChatId, indexCurrentChat)
     }
 
     return (

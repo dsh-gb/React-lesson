@@ -19,7 +19,8 @@ const rootReducer = combineReducers({
 const persistConfig = {
     key: 'root',
     storage,
-    blacklist: ['news']
+    whitelist: ['profile', 'news'],
+    blacklist: ['chats', 'messages']
 }
 
 // persist редюсер 

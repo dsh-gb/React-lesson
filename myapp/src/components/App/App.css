@@ -25,6 +25,7 @@
   flex-direction: column;
   align-items: center;
   justify-content: flex-start;
+  text-align: center;
   font-size: 24px;
   color: white;
 }
@@ -197,4 +198,18 @@
 
 .news-image {
   max-width: 20vw;
+}
+
+.login {
+  min-height: 160px;
+  padding: 40px 0 40px 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: #bdb6b6
+}
+
+.login-input {
+  background-color: #e7e0e0
 }

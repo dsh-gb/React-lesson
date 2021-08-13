@@ -1,13 +1,9 @@
 // подключаем наши экшины для chats
-import { CHANGE_CHATS } from '../actions/chats'
+import { ADD_CHATS, REMOVE_CHATS } from '../actions/chats'
 
 // дефолтные значения для state.chats
 const initialState = {
-    chats: [
-        { id: "1", name: "Чат 1" },
-        { id: "2", name: "Чат 2" },
-        { id: "3", name: "Чат 3" }
-    ],
+    chats: [],
     initialCurrentChat: []
 }
 
@@ -18,13 +14,18 @@ const initialState = {
 export default function reducer(state = initialState, action) {
     switch (action.type) {
         // наши экшины для chats
-        case (CHANGE_CHATS): {
+        case (ADD_CHATS): {
             return {
                 ...state,
-                chats: action.payload.chats
+                chats: [...state.chats, { id: `${action.payload.chatId}`, name: `Чат id-${action.payload.chatId}` }]
             }
         }
-
+        case (REMOVE_CHATS): {
+            return {
+                ...state,
+                chats: state.chats.filter(el => el.id !== action.payload.chatId)
+            }
+        }
         // если изменений state не было возвращаем старое значение state
         default:
             return state

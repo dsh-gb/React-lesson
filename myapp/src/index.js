@@ -6,6 +6,7 @@ import Router from './components/Router/Router'
 import './index.css'
 import { persistor, store } from './store'
 import { PersistGate } from 'redux-persist/integration/react'
+import './services/firebase'
 
 ReactDOM.render(
   <React.StrictMode>

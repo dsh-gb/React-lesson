@@ -4,7 +4,7 @@ import { AUTHORS } from '../App/constants'
 // компонент Message, вывод текста в формате: автор - текст
 // добавленны разные стили для бота и пользователя
 function Message(props) {
-    const { message: { author, text } } = props
+    const { author, text } = props
     return (
         <>
             {

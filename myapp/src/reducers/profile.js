@@ -1,10 +1,11 @@
 // подключаем наши экшины
-import { CHANGE_NAME, CHANGE_SHOW_NAME } from '../actions/profile'
+import { CHANGE_NAME, CHANGE_SHOW_NAME, CHANGE_IS_AUTHED } from '../actions/profile'
 
 // дефолтные значения для state
 const initialState = {
     showName: true,
-    name: 'Grag'
+    name: 'Grag',
+    isAuthed: false,
 }
 
 // функция reducer - принимает текущее состояние store через state 
@@ -23,6 +24,12 @@ export default function reducer(state = initialState, action) {
             return {
                 ...state,
                 showName: !state.showName
+            }
+        }
+        case CHANGE_IS_AUTHED: {
+            return {
+                ...state,
+                isAuthed: action.payload.isAuthed
             }
         }
         // если изменений state не было возвращаем старое значение state

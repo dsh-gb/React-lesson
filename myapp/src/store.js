@@ -5,18 +5,22 @@ import storage from 'redux-persist/lib/storage'
 import profileReducer from './reducers/profile'
 import chatsReducer from './reducers/chats'
 import messagesReducer from './reducers/messages'
+import newsReducer from './reducers/news'
 
 // список наших редюсеров - корневой редюсер
 const rootReducer = combineReducers({
     profile: profileReducer,
     chats: chatsReducer,
-    messages: messagesReducer
+    messages: messagesReducer,
+    news: newsReducer,
 })
 
 // конфиг для persist
 const persistConfig = {
     key: 'root',
     storage,
+    whitelist: ['profile', 'news'],
+    blacklist: ['chats', 'messages']
 }
 
 // persist редюсер 

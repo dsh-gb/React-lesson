@@ -6,10 +6,11 @@ import Router from './components/Router/Router'
 import './index.css'
 import { persistor, store } from './store'
 import { PersistGate } from 'redux-persist/integration/react'
+import './services/firebase'
 
 ReactDOM.render(
   <React.StrictMode>
-    {/* оборачиваем все наше прилодение в компонент Provider
+    {/* оборачиваем все наше приложение в компонент Provider
     и передаем ему в пропсы наш объект store */}
     <Provider store={store}>
       <PersistGate persistor={persistor} loading={<p>Загрузка данных...</p>}>

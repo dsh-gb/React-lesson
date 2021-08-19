@@ -25,17 +25,16 @@
   flex-direction: column;
   align-items: center;
   justify-content: flex-start;
+  text-align: center;
   font-size: 24px;
   color: white;
 }
 
 .App-block {
-  padding: 20px;
-  max-height: 50px;
-  min-width: 60vw;
+  margin: 20px;
   display: flex;
+  justify-content: center;
   align-items: center;
-  justify-content: space-around;
 }
 
 .chat {
@@ -168,4 +167,49 @@
 .profile-text {
   font-size: 40px;
   font-weight: 700;
+}
+
+.news {
+  padding: 10px 0 10px 20px;
+  display: flex;
+  justify-content: flex-start;
+  background-color:#bdb6b6;
+}
+
+.news-wrapper {
+  margin-left: 20px;
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+}
+
+.news-title {
+  
+}
+
+.news-link {
+  color: #1b1919b3;
+  text-decoration: none;
+}
+
+.news-link:hover {
+  color: #c13737;
+}
+
+.news-image {
+  max-width: 20vw;
+}
+
+.login {
+  min-height: 160px;
+  padding: 40px 0 40px 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: #bdb6b6
+}
+
+.login-input {
+  background-color: #e7e0e0
 }

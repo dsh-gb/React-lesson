@@ -1,14 +1,17 @@
 import { fireEvent, render } from '@testing-library/react'
-import Profile from "./Profile"
+import Profile from './Profile'
 import configureStore from 'redux-mock-store'
-import { Provider } from 'react-redux';
+import { Provider } from 'react-redux'
+import changeShowName from '../../actions/profile'
 
 // тесты для компонента-контейнера Profile
 describe("Component Profile", () => {
     const initialState = {
-        showName: true,
-        name: 'Grag',
-        isAuthed: false,
+        profile: {
+            showName: true,
+            name: 'Grag',
+            isAuthed: false,
+        }
     }
     const mockStore = configureStore()
     let store, component
@@ -27,7 +30,7 @@ describe("Component Profile", () => {
 
         fireEvent(checkBox, click)
 
-        const actions = mockStore.getActions();
+        const actions = store.getActions();
         const lastAction = actions[actions.length - 1];
         expect(lastAction).toEqual(changeShowName());
     });

@@ -89,7 +89,7 @@ const Chat = (props) => {
         <>
             {!currentChatId ? <h2 className="message-window">Выбирите чат</h2> :
                 <ul className="message-list">
-                    {currentChat?.map((message, index) => <Message key={index} message={message} />)}
+                    {currentChat?.map((message, index) => <Message key={index} author={message.author} text={message.text} />)}
                     <Input onSubmit={handleMessageSubmit} label="Ваше сообщение..." />
                 </ul>}
         </>

@@ -50,7 +50,7 @@ function Login() {
 
     return <>
         {/* заголовок страницы */}
-        {isAuthed ? <Header text={`Привет ${user.email}`} key="welcome-header" /> :
+        {isAuthed ? <Header text={`Привет ${user?.email}`} key="welcome-header" /> :
             <Header text="Авторизация" key="login-header" />}
 
         {/* 
@@ -61,7 +61,7 @@ function Login() {
         {isAuthed
             ?
             <div className="login">
-                <p>{`user_uid: ${user.uid}`}</p>
+                <p>{`user_uid: ${user?.uid}`}</p>
                 <Button
                     id='btn-login'
                     variant="contained"
